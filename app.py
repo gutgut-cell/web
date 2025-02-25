@@ -22,15 +22,6 @@ SCOPES = ["https://www.googleapis.com/auth/drive"]
 credentials = service_account.Credentials.from_service_account_file(
     SERVICE_ACCOUNT_FILE, scopes=SCOPES
 )
-# Debugging: Print the service account info before initializing credentials
-import json
-print(json.dumps(SERVICE_ACCOUNT_INFO, indent=2))  # Debugging
-
-credentials = service_account.Credentials.from_service_account_info(
-    SERVICE_ACCOUNT_INFO, scopes=SCOPES
-)
-
-FOLDER_ID = "1GcQ6lADVSPWaHnPh8oIFV1zJ7i88mSp4"
 
 def fetch_google_drive_images(folder_id):
     """Fetches both display and processing URLs from Google Drive."""
