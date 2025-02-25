@@ -64,6 +64,8 @@ client = genai.Client(api_key=GEMINI_API_KEY)
 def fetch_and_validate_image(image_url):
     """Fetches an image from Google Drive for AI processing."""
     try:
+        print(f"🔍 Fetching Image: {image_url}")  # Debugging
+
         if "drive.google.com" in image_url:
             # Extract the file ID from the URL
             file_id = image_url.split("id=")[-1].split("&")[0]
@@ -74,7 +76,11 @@ def fetch_and_validate_image(image_url):
             file_data = io.BytesIO(request.execute())  # Fetch bytes
             file_data.seek(0)
 
-            # Convert to a valid image format
+            # Save image temporarily for debugging
+            with open("/tmp/test_image.jpg", "wb") as f:
+                f.write(file_data.getvalue())
+
+            # Try opening the image
             image = Image.open(file_data)
             image = image.convert("RGB")  # Ensure RGB format
             img_byte_arr = io.BytesIO()
@@ -84,8 +90,12 @@ def fetch_and_validate_image(image_url):
         # If it's a normal image URL, fetch it normally
         response = requests.get(image_url, stream=True)
         if response.status_code != 200:
-            print(f"Error fetching image: {response.status_code}")
+            print(f"❌ Error fetching image: {response.status_code}")
             return None
+
+        # Save the downloaded image for debugging
+        with open("/tmp/test_image.jpg", "wb") as f:
+            f.write(response.content)
 
         image = Image.open(io.BytesIO(response.content))
         image = image.convert("RGB")
@@ -94,7 +104,7 @@ def fetch_and_validate_image(image_url):
         return img_byte_arr.getvalue()
 
     except Exception as e:
-        print("Exception in processing image:", str(e))
+        print(f"❌ Exception in processing image: {e}")
         return None
 
 def generate_poem(image_url):
@@ -128,11 +138,17 @@ def generate_poem(image_url):
     except Exception as e:
         return f"Error generating poem: {e}"
 
-@app.route("/")
+
+@app.route("/", methods=["GET"])
 def home():
+    if request.method == "HEAD":
+        print("🚀 Render Health Check - Skipping Image Fetch")
+        return "", 200  # Respond with a simple 200 OK
+
     display_url, process_url = get_random_image()  # Get both URLs
     poem = generate_poem(process_url) if process_url else "No image available."
     return render_template("index.html", image_url=display_url, poem=poem)
+
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))  # Render assigns a dynamic port
