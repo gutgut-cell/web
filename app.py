@@ -14,16 +14,55 @@ load_dotenv()
 
 app = Flask(__name__)
 
-# Google Drive API Credentials
+# Google Drive API Credentials (Embedded JSON Key)
+SERVICE_ACCOUNT_INFO = {
+    "type": "service_account",
+    "project_id": "website-451921",
+    "private_key_id": "f977a46992850b5fe3ba33b6915ee4994bce9429",
+    "private_key": """-----BEGIN PRIVATE KEY-----
+MIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCzQYJZlL7XwOn3
+2RJUJRRa7GaaWDfVcprVM7x3hQqCachMv2peqtP7iqBS0ZIplh4Wgxx4cLaDVmWO
+QaomLLOBP9ngTudxdTG9X+WM65DVvq953h7xMYq6319W5xz8TfMuPXBWB2EkBwBS
+Pph+ceO/oJnd1Tlbx2r9HkQ2/B0OrOzU7ftFR/tnPDrhxm5bbZQasjYx9rG91kCq
+Rj42+/TVqr5Ss+G+Is0UMJkpbC+471cCK/RKVJ25i0KhKfBCXU6eH2E0z3qr1Kkg
+axu48+L0GdL5AHHe8FLtctepWQv5V976pZ/cybSy21IgrGTAVbwXpMDRh5EO9UGg
++d+fEqZfAgMBAAECggEACIML1YUiqswWUBaWsDgyhz7CgIG/5PrUL1uNj39ZyGeN
+g1dzjZs/BarHgidBcYgXVapUJ8PyZroriF3F3powy+pkRip5AwI1onBzTgXBkuTD
+IF5TydA4bjc9J7tBvRlWetOgCfW/vx41/bHLO/XcgrT1mXsOhjUp92sAgjvmhVPM
+UC2/xWAIRJ20bfLlOPTVd/IjD02P4C+5PhuNmkQcmvlcXY7+gwqVLhM6oRE2ktqu
+LMZwTihJvkFT97MZWQrR2MgYFjF0ArZzvRDFPorC7XwjPmNQhhm1lhiSXu/RTg38
+d+If6Bqg8cH55qYKYWTvKZ53o+Z9MDb6ZzBZGVFBwQKBgQDwdwZ9MHB1KhGMF6wZ
+HZMj0YN8B60AkmnOyak5P+Afs+dJQfSuMsmhhGS9rIcnDLLhc7OSscoAnbm7aN98
+L7ZYFeXlBvfGQCaIKc0+eeJfnKWL+HtGb4JYoOZ+XtOd0HOQ6vmVsIdyeQ1bnhd2
+JoSnz+XYf3fHRAj1yqxDxUZtCwKBgQC+1iqfYyv0ar4CubS5nRu4SI6P7bEUukOG
+dPLsy4iC8ePCJtiIRX/6zvCnJQ01Fr6tiiRiiLLEDmdkQZS7dv+RjANzG0oIUH7f
+hbYGGt9gcTJoW3TOhu/6UKX56EjdjaOak2hF4F54fLC0ph+0vBgbo2qRQcNb/zpk
+/uD/vp84fQKBgDQYNSmt8s8PPBnzju8p/xSFcUzPhOVY0t9fxO+ILQ/xM6wlQ9Lx
+YclCG2kUFXuaPq6lGEQxjCeyA+jcAX6v/3r504JYjhk/EJnzJGnike5Qy3SVcm+B
+/OUihozeEk5gOIkuvr91LQLZwtEUYNTR529LlOngQ5zB2ocVT1inRmidAoGAELhW
+96wKt9l6WGbI7NJVEWpaA0ZCE5zWObuZZSHYDhD/cY1Rv27HbcQf1aUraRFbF31Y
+/sEXWJIigOg2Dc65SZlI3Bbx/5R96Tuf3R0RoTOJxRbuPwIXmIjkYeb2K2MziGGN
+60FjRY83NDyx3nX0bsd8mMl4QmE0TpD+San77UkCgYAqYZvXP/svZ1Zeq6AxSgGn
+MkSxgTGYFUm//sNEyvH4kACP9DR2TxxNCFn7CFhYBvOfWlR+eD7Z7zhq0FtohnEZ
+xpo7iU/TYgPfjG5qBXJERki8DF3/3eEKLhnfX5QXDSXnEcD69dOMBUuoAfeemT8N
+ggM6i3qS7JnEQCffxdSV6g==
+-----END PRIVATE KEY-----""",
+    "client_email": "id-shoo@website-451921.iam.gserviceaccount.com",
+    "client_id": "113352289973589150404",
+    "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+    "token_uri": "https://oauth2.googleapis.com/token",
+    "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+    "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/id-shoo%40website-451921.iam.gserviceaccount.com",
+    "universe_domain": "googleapis.com"
+}
 
-# Google Drive API Credentials
-SERVICE_ACCOUNT_FILE = "website-451921-f977a4699285.json"
-FOLDER_ID = "1GcQ6lADVSPWaHnPh8oIFV1zJ7i88mSp4"
-
+# Set up Google API Credentials
 SCOPES = ["https://www.googleapis.com/auth/drive"]
-credentials = service_account.Credentials.from_service_account_file(
-    SERVICE_ACCOUNT_FILE, scopes=SCOPES
+credentials = service_account.Credentials.from_service_account_info(
+    SERVICE_ACCOUNT_INFO, scopes=SCOPES
 )
+
+FOLDER_ID = "1GcQ6lADVSPWaHnPh8oIFV1zJ7i88mSp4"
 
 def fetch_google_drive_images(folder_id):
     """Fetches both display and processing URLs from Google Drive."""
