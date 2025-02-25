@@ -14,25 +14,14 @@ load_dotenv()
 
 app = Flask(__name__)
 
-# Google Drive API Credentials (Embedded JSON Key)
-SERVICE_ACCOUNT_INFO = {
-  "type": "service_account",
-  "project_id": "website-451921",
-  "private_key_id": "4a095ddb921485a6401dfb1df55c86e386e55120",
-  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCj4zByq+Nzj+96\ncTyeW7NNzxm+GwlxK96iwTxgeocl02HZWNsOWiGlSTMutkP6W0viCajpHVOBn/eu\nwweUIN22O6doHBr/GXiwe+25iq1rlWxMt4KAbdtrQCOBWokbP5iTiNKAaDsmUZpn\nt4Dtxb3ZBJsBMqnoOrzMgFOWlbDjl9yyX6MLejCX419Rk/9kDxd0Mcqqe29PsGlg\nvr7iQGOF/i4+JP/47lNpsrX9JmPKcI07K5s/iZezm296w8PgNh0kkQkpiB0G2fZn\n/s88UmL4EG/MehzzPmoDJk6dz1Eq8x92THqhesAkoOczRMVrqKekH3yB4BhuZAXZ\n7VyhpXTFAgMBAAECggEAC0FFOL7SvEM4hk9kAxkXl4KfSTW4oIfLfqBoKdUIVoHt\nkJxgUNxCPsRn6i+UvAsMi02wBrBfpYGLpDobGWJnb4YpwUXa2cWRSwd7xDgAoGiO\n2zboFLNWtAcf2RiTXWZw70Lgd/aQh1ln0fMhfNLNbqu5DGxDDGKKSD4Q34DQuNR/\nAV124gnk7izxNM8RLsLlSqWw5R9NZVi64OARd+FGt+nmCApHWL/o5y7+hlMcdFkq\n5IcvDyQrax68AkYCbQXwTNtJlB+N50Y1MEcHrYfZA7oBlS8+lDCDq2PnmggkloDi\npVw/AmwwkKFRGAJVxElhpiWbRfw0rm9wy5Rr20uf0QKBgQDlG2BF4br4FP2nELv9\n5sRGs0RS9CdUyyztXbiJAmsDaVCB96TyVdlcfdN+CxMQCLwI8E8Xt/wUVP1/iDuj\n6+EhSuW+RihIxxIC/7TL1dpeV1/JQzI+1EMwjBvP4/M2L0QYD4rZo9W51o1weoFj\nYIftIrjrnIHKysqHilxkhSEVMQKBgQC3H/qknh7kx+Y5YjsMLaR0UngCXcx5Peem\nhe9sx7eJXgMQ+DsQosTIyW/zWFnmDYS5b2NI2qehssLmzbcqvtSTCH13M8tUZNww\nEfKtcBR5/n9KQLZiMuJDLr44XqsN6CIH1Acg8hY3Icm09SxWlu3TO3BMAoGLeSHV\nnpolBQND1QKBgA6rJgrTXQktLuBXbfHfqIluSN2WzD3dlE7ORVZgVUGuqHzpwiHR\n5UzKsZPMWbgZFxDrceTu3rDekCxuKINiQtPC29rG2yVtuXV/sa+rTYPkzDkymDD1\nniepkM5KpfO+KvnvZNBycOipF/0vmsEmGQ3Rv002hAjb2wO6lBfLfkbBAoGBAI0V\nQyoudAi4hYOyTWGtjGTd4H2aPF0wN1dRGsvI9nsLhfs982t2q3sxzmFBsUkPIzEm\nQuyvILTwHz5oQPTavrVkthzvN3iWmBkkyr2aevwd+X2Aa8MuBqnRylVtggWd0RIM\n5U0Zlcn16wvSU82GTEYQJg05ZQrKUSneHk3lFcXdAoGBALhA7HliN+WfEYZixGDs\nX3VnEjOmyS0eTJLCZFQ5asV3RgulcENDZ1Yz5Lv+Qd1iauoYL46AbG6MRCAgdhZP\nNyco3fu+pXwJY5lfZvziR2WwqFAODCcIAMkh1lDkRO15saSInbpzbiQljBvVsgCt\n9jCkWSQS2VA1yWBruxOrNdHd\n-----END PRIVATE KEY-----\n",
-  "client_email": "anshu-887@website-451921.iam.gserviceaccount.com",
-  "client_id": "114418492390381250767",
-  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
-  "token_uri": "https://oauth2.googleapis.com/token",
-  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/anshu-887%40website-451921.iam.gserviceaccount.com",
-  "universe_domain": "googleapis.com"
-}
+# Google Drive API Credentials
+SERVICE_ACCOUNT_FILE = "website-451921-f977a4699285.json"
+FOLDER_ID = "1GcQ6lADVSPWaHnPh8oIFV1zJ7i88mSp4"
 
-# Set up Google API Credentials
-# Set up Google API Credentials
 SCOPES = ["https://www.googleapis.com/auth/drive"]
-
+credentials = service_account.Credentials.from_service_account_file(
+    SERVICE_ACCOUNT_FILE, scopes=SCOPES
+)
 # Debugging: Print the service account info before initializing credentials
 import json
 print(json.dumps(SERVICE_ACCOUNT_INFO, indent=2))  # Debugging
