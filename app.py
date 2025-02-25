@@ -17,7 +17,7 @@ app = Flask(__name__)
 # Google Drive API Credentials
 
 FOLDER_ID = "1GcQ6lADVSPWaHnPh8oIFV1zJ7i88mSp4"
-
+SCOPES = ["https://www.googleapis.com/auth/drive"]
 import json
 
 credentials_json = os.getenv("GOOGLE_CREDENTIALS")  # Load from env variable
