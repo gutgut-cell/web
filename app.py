@@ -136,5 +136,6 @@ def home():
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 10000))  # Render assigns a dynamic port
+    print(f"🔥 Starting Flask on 0.0.0.0:{port}")  # Debugging log
     app.run(host="0.0.0.0", port=port, debug=True)
 
