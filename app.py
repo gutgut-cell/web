@@ -30,7 +30,13 @@ SERVICE_ACCOUNT_INFO = {
 }
 
 # Set up Google API Credentials
+# Set up Google API Credentials
 SCOPES = ["https://www.googleapis.com/auth/drive"]
+
+# Debugging: Print the service account info before initializing credentials
+import json
+print(json.dumps(SERVICE_ACCOUNT_INFO, indent=2))  # Debugging
+
 credentials = service_account.Credentials.from_service_account_info(
     SERVICE_ACCOUNT_INFO, scopes=SCOPES
 )
