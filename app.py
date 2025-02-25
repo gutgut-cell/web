@@ -17,7 +17,7 @@ app = Flask(__name__)
 # Google Drive API Credentials
 
 # Google Drive API Credentials
-SERVICE_ACCOUNT_FILE = "/etc/secrets/website-451921-f977a4699285.json"
+SERVICE_ACCOUNT_FILE = "website-451921-f977a4699285.json"
 FOLDER_ID = "1GcQ6lADVSPWaHnPh8oIFV1zJ7i88mSp4"
 
 SCOPES = ["https://www.googleapis.com/auth/drive"]
