@@ -2,7 +2,7 @@ import os
 import random
 import requests
 import io
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from googleapiclient.discovery import build
 from google.oauth2 import service_account
 from google import genai
