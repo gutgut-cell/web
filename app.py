@@ -16,7 +16,7 @@ app = Flask(__name__)
 
 # Google Drive API Credentials
 
-FOLDER_ID = "1GcQ6lADVSPWaHnPh8oIFV1zJ7i88mSp4"
+
 SCOPES = ["https://www.googleapis.com/auth/drive"]
 import json
 
@@ -27,6 +27,7 @@ if credentials_json:
 else:
     raise ValueError("Google Credentials are missing! Set GOOGLE_CREDENTIALS in env variables.")
 
+FOLDER_ID = "1GcQ6lADVSPWaHnPh8oIFV1zJ7i88mSp4"
 
 def fetch_google_drive_images(folder_id):
     """Fetches both display and processing URLs from Google Drive."""
